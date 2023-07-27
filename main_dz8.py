@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 
 
 def get_birthdays_per_week(users):
+    result = {}
     if len(users) < 1:
         return f"Список сотрудников пуст"
     dt_now = datetime.now()
@@ -14,7 +15,14 @@ def get_birthdays_per_week(users):
                 bd_date = bd_date + timedelta(days=2)
             if bd_date.weekday() == 6:
                 bd_date = bd_date + timedelta(days=1)
-            print(f"{bd_date.strftime('%A')}: {employee.get('name')}")
+            if bd_date.strftime('%A') not in result:
+                result[bd_date.strftime('%A')] = []
+            result[bd_date.strftime('%A')].append(employee.get('name'))
+    
+    for key,value in result.items():
+	    print(key, ': ', ", ".join(value))      
+     
+     # print(f"{bd_date.strftime('%A')}: {employee.get('name')}")
         
 
 
@@ -25,7 +33,8 @@ users = [{"name": "Ann R","birthday": "2023-07-26"},
          {"name": "TRE gh","birthday": "2023-07-29"},
          {"name": "firere","birthday": "2023-07-30"},
          {"name": "elkrel","birthday": "2023-06-06"},
-         {"name": "qqqqqq","birthday": "2023-08-01"}]
+         {"name": "qqqqqq","birthday": "2023-08-01"},
+         {"name": "ttttttt","birthday": "2023-08-01"}]
 
 print(get_birthdays_per_week(users))
 
